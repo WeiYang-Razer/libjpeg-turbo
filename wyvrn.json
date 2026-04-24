@@ -1,0 +1,36 @@
+{
+  "name": "libjpeg-turbo",
+  "version": "3.1.4.0",
+  "schemaVersion": 2,
+  "kind": "DynamicLib",
+  "description": "SIMD-accelerated JPEG codec",
+  "dependencies": {},
+  "options": {
+    "shared": {
+      "default": true,
+      "allowed": [true, false],
+      "description": "Build as shared library; set false for static"
+    }
+  },
+  "build": {
+    "system": "cmake",
+    "configs": [
+      "Debug",
+      "Release",
+      "RelWithDebInfo",
+      "MinSizeRel"
+    ],
+    "configure": [
+      "-DENABLE_SHARED=${options.shared}",
+      "-DENABLE_STATIC=ON",
+      "-DWITH_TURBOJPEG=ON",
+      "-DWITH_TOOLS=OFF",
+      "-DWITH_TESTS=OFF",
+      "-DWITH_JAVA=OFF",
+      "-DCMAKE_DEBUG_POSTFIX=d",
+      "-DCMAKE_RELWITHDEBINFO_POSTFIX=rd",
+      "-DCMAKE_MINSIZEREL_POSTFIX=msr"
+    ],
+    "installDir": "install"
+  }
+}
