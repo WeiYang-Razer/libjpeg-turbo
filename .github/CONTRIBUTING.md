@@ -34,11 +34,11 @@ accepted unless:
       log and (if applicable) the libjpeg and TurboJPEG API documentation and
       man pages.
     - The code implementing the new feature is formatted consistently with the
-      rest of the libjpeg-turbo code base (use
+      rest of the libjpeg-turbo code base.  (Use
       [checkstyle](https://github.com/libjpeg-turbo/checkstyle) to validate
       this.)
     - The new feature does not introduce new members into the exposed libjpeg
-      API structures (doing so would break backward ABI compatibility.)
+      API structures.  (Doing so would break backward ABI compatibility.)
     - The new feature does not alter existing libjpeg-turbo usage or
       development workflows.
     - The code implementing the new feature is elegant, easily maintainable,
@@ -79,8 +79,8 @@ are unlikely to be accepted unless:
         - (if applicable) The earliest version of CMake with which the
           enhancement can be used
     - The enhancement has been tested on all of the major platforms (Mac,
-      Linux, Windows/Visual C++, Windows/MinGW) that are potentially affected
-      by it.
+      Un*x, Windows/Visual C++, Windows/MinGW) that are potentially affected by
+      it.
     - The enhancement does not introduce new build system requirements or CMake
       variables unless absolutely necessary.
     - The enhancement does not alter existing libjpeg-turbo development
@@ -93,3 +93,24 @@ are unlikely to be accepted unless:
       the upstream libjpeg-turbo build system.  Use the CMake
       `ExternalProject_Add()` function instead.
     - Enhancements that introduce new (non-CMake-based) build systems
+
+Pull Requests
+-------------
+
+This project does not allow unsolicited pull requests.  If, after discussing a
+proposed code contribution with the project maintainer, a pull request is
+warranted, then you will be given access to the pull request system.
+
+Use of AI
+---------
+
+No code or other content in the libjpeg-turbo source tree was generated, in
+whole or in part, using AI tools.
+
+Because it is impossible to know what source material was used to train a
+particular AI model, it is impossible to know whether placing AI-generated code
+and other content under libjpeg-turbo's open source licenses would violate
+someone else's copyright.  At best, it is a legal gray area.  For that reason
+and others, this project does not accept any contributions intended for
+inclusion in the libjpeg-turbo source tree that were generated, in whole or in
+part, using AI tools.

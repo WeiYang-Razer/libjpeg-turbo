@@ -264,12 +264,15 @@ do_drop(j_decompress_ptr srcinfo, j_compress_ptr dstinfo,
         ((j_common_ptr)srcinfo, src_coef_arrays[ci], blk_y + y_drop_blocks,
          (JDIMENSION)compptr->v_samp_factor, TRUE);
       if (ci < dropinfo->num_components) {
-        src_buffer = (*dropinfo->mem->access_virt_barray)
-          ((j_common_ptr)dropinfo, drop_coef_arrays[ci], blk_y,
-           (JDIMENSION)compptr->v_samp_factor, FALSE);
-        for (offset_y = 0; offset_y < compptr->v_samp_factor; offset_y++) {
-          jcopy_block_row(src_buffer[offset_y],
-                          dst_buffer[offset_y] + x_drop_blocks, comp_width);
+        for (offset_y = 0; offset_y < compptr->v_samp_factor &&
+             blk_y + offset_y < dropinfo->comp_info[ci].height_in_blocks;
+             offset_y++) {
+          src_buffer = (*dropinfo->mem->access_virt_barray)
+            ((j_common_ptr)dropinfo, drop_coef_arrays[ci], blk_y + offset_y,
+             (JDIMENSION)1, FALSE);
+          jcopy_block_row(src_buffer[0], dst_buffer[offset_y] + x_drop_blocks,
+                          MIN(comp_width,
+                              dropinfo->comp_info[ci].width_in_blocks));
         }
       } else {
         for (offset_y = 0; offset_y < compptr->v_samp_factor; offset_y++) {
@@ -450,6 +453,9 @@ do_crop_ext_flat(j_decompress_ptr srcinfo, j_compress_ptr dstinfo,
   for (ci = 0; ci < dstinfo->num_components; ci++) {
     compptr = dstinfo->comp_info + ci;
     comp_width = MCU_cols * compptr->h_samp_factor;
+    /* Prevent buffer overrun */
+    if (comp_width == 0)
+      ERREXIT(srcinfo, JERR_BAD_CROP_SPEC);
     comp_height = MCU_rows * compptr->v_samp_factor;
     x_crop_blocks = info->x_crop_offset * compptr->h_samp_factor;
     y_crop_blocks = info->y_crop_offset * compptr->v_samp_factor;
@@ -547,6 +553,9 @@ do_crop_ext_reflect(j_decompress_ptr srcinfo, j_compress_ptr dstinfo,
   for (ci = 0; ci < dstinfo->num_components; ci++) {
     compptr = dstinfo->comp_info + ci;
     comp_width = MCU_cols * compptr->h_samp_factor;
+    /* Prevent infinite loop */
+    if (comp_width == 0)
+      ERREXIT(srcinfo, JERR_BAD_CROP_SPEC);
     comp_height = MCU_rows * compptr->v_samp_factor;
     x_crop_blocks = info->x_crop_offset * compptr->h_samp_factor;
     y_crop_blocks = info->y_crop_offset * compptr->v_samp_factor;

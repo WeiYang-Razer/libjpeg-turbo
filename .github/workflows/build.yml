@@ -151,7 +151,7 @@ jobs:
         shell: bash
         run: |
           export PATH="/c/nasm-2.10.01:/c/Program Files (x86)/NSIS/:$PATH:/c/msys64/usr/bin/"
-          export VSINSTALLDIR='C:\Program Files\Microsoft Visual Studio\2022\Enterprise\'
+          export VSINSTALLDIR='C:\Program Files\Microsoft Visual Studio\18\Enterprise\'
           eval "$(c:/vcvars-bash/vcvarsall.sh amd64)"
           echo INCLUDE=$INCLUDE
           echo LIB=$LIB
@@ -178,7 +178,7 @@ jobs:
           path: c:/ljt.nightly/files/libjpeg-turbo-*.exe
       - name: Sign artifact
         if: ${{github.event_name == 'push' && contains(github.ref, 'refs/tags/')}}
-        uses: signpath/github-action-submit-signing-request@v1.1
+        uses: signpath/github-action-submit-signing-request@v3
         with:
           api-token: ${{secrets.SIGNPATH_API_TOKEN}}
           organization-id: 3bc964ce-257b-4362-829f-1df1f087f5a0
