@@ -1,6 +1,6 @@
 {
   "name": "libjpeg-turbo",
-  "version": "3.1.4.0",
+  "version": "3.2.1.0",
   "schemaVersion": 2,
   "kind": "DynamicLib",
   "description": "SIMD-accelerated JPEG codec",
@@ -8,7 +8,10 @@
   "options": {
     "shared": {
       "default": true,
-      "allowed": [true, false],
+      "allowed": [
+        true,
+        false
+      ],
       "description": "Build as shared library; set false for static"
     }
   },
